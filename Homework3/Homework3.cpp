@@ -25,7 +25,7 @@ int main()
 	int treeHeight;
 	bool reset; // Whether or not the user wants another tree
 
-	cout << "Marcus Wadge-Dale, SE3, December 2017" << endl;
+	cout << "Marcus Wadge-Dale, SE3, 10:00am Tuesday 12th December 2017" << endl;
 
 	do {
 		do {
