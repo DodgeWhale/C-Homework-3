@@ -23,9 +23,9 @@ void drawAXmasTree(int);
 int main()
 {
 	int treeHeight;
-	bool reset;
+	bool reset; // Whether or not the user wants another tree
 
-	cout << "Marcus Wadge-Dale, SE3, Tuesday 12th December 10:00am" << endl;
+	cout << "Marcus Wadge-Dale, SE3, December 2017" << endl;
 
 	do {
 		do {
@@ -40,11 +40,13 @@ int main()
 
 		drawAXmasTree(treeHeight);
 
+		// Prompt user to run the reset while loop again
 		cout << "Would you like another tree? (Y/N): ";
 		reset = agreeToContinue();
 	} while (reset);
 }
 
+// Changes the console colour to the colour code specified
 void setConsoleColour(int colour) {
 	SetConsoleTextAttribute(hConsole, colour);
 }
@@ -56,14 +58,17 @@ bool getValidHeight(int treeHeight) {
 }
 
 void drawAXmasTree(int treeHeight) {
+	// Define local variables
 	int difference = 1,
-		leavesHeight = treeHeight - 2,
+		leavesHeight = treeHeight - 2, // The logs always have a height of 2
 		woodSpaces = 0,
 		boundryLength = leavesHeight * 2 + 1;
 
+	// Print the top border
 	multiplyChars(BOUNDRY, boundryLength);
 	cout << endl;
 
+	// Loop from 0 - the height of the tree passed
 	for (int x = 0; x < treeHeight; x++) {
 		if (x >= leavesHeight) {
 			cout << BOUNDRY;
@@ -73,9 +78,11 @@ void drawAXmasTree(int treeHeight) {
 		else {
 			int spaces = leavesHeight - difference;
 
+			// Print left padding and border line
 			cout << BOUNDRY;
 			multiplyChars(BLANK, spaces);
 
+			// 0 = the peak of the tree
 			if (x == 0) {
 				woodSpaces = spaces;
 				setConsoleColour(12); // RED
@@ -86,6 +93,7 @@ void drawAXmasTree(int treeHeight) {
 				drawLineOfFoliage(x + difference);
 			}
 
+			// Print right padding and border line
 			multiplyChars(BLANK, spaces);
 			cout << BOUNDRY;
 
@@ -95,14 +103,23 @@ void drawAXmasTree(int treeHeight) {
 		cout << endl;
 	}
 
+	// Print out bottom border
 	multiplyChars(BOUNDRY, boundryLength);
 	cout << endl;
 }
 
-// Prints the characters 
+// Prints a character X amount of times
 void multiplyChars(char c, int amount) {
-	for (int i = 0; i < amount; i++)
+	for (int i = 0; i < amount; i++) {
+		// If the character passed is blank, there's a 1 in 8 chance it will show a 'snowflake'
+		if (c == BLANK) {
+			if (rand() % 8 == 0) {
+				cout << '*';
+				continue;
+			}
+		}
 		cout << c;
+	}
 }
 
 void drawLineOfFoliage(int length) {
